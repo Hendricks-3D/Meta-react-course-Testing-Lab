@@ -8,13 +8,14 @@ describe("Feedback Form", () => {
     const handleSubmit = jest.fn();
     render(<FeedbackForm onSubmit={handleSubmit} />);
 
-    // You have to write the rest of the test below to make the assertion pass
-    const scoreInput = screen.getByLabelText(/score/i);
-    const commentInput = screen.getByLabelText(/comments/i);
+    const rangeInput = screen.getByLabelText(/Score:/);
+    fireEvent.change(rangeInput, { target: { value: score } });
 
-    fireEvent.change(scoreInput, { target: { value: score } });
-    fireEvent.change(commentInput, { target: { value: comment } });
-    fireEvent.click(screen.getByRole("button", { name: /submit/i }));
+    const textArea = screen.getByLabelText(/Comments:/);
+    fireEvent.change(textArea, { target: { value: comment } });
+
+    const submitButton = screen.getByRole("button");
+    fireEvent.click(submitButton);
 
     expect(handleSubmit).toHaveBeenCalledWith({
       score,
@@ -27,10 +28,11 @@ describe("Feedback Form", () => {
     const handleSubmit = jest.fn();
     render(<FeedbackForm onSubmit={handleSubmit} />);
 
-    // You have to write the rest of the test below to make the assertion pass
-    const scoreInput = screen.getByLabelText(/score/i);
-    fireEvent.change(scoreInput, { target: { value: score } });
-    fireEvent.click(screen.getByRole("button", { name: /submit/i }));
+    const rangeInput = screen.getByLabelText(/Score:/);
+    fireEvent.change(rangeInput, { target: { value: score } });
+
+    const submitButton = screen.getByRole("button");
+    fireEvent.click(submitButton);
 
     expect(handleSubmit).toHaveBeenCalledWith({
       score,
